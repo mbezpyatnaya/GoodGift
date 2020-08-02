@@ -1,11 +1,11 @@
 from src.extensions import db
-
+import uuid
 
 class RequestModel(db.Model):
 
     __tablename__ = "requests"
 
-    id = db.Column(db.Integer, nullable=False, primary_key=True)
+    id = db.Column(db.Text(length=36), default=lambda: str(uuid.uuid4()), primary_key=True)
     theme = db.Column(db.String(80), nullable=False)
     body = db.Column(db.String(190), nullable=False)
     creator = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)

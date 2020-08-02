@@ -6,12 +6,12 @@ from src.models.confirmation import ConfirmationModel
 from libs.mail.mailgun import MailGun
 from libs.serving import response_quote
 from libs.f2auth.email_f2auth import EmailSecondFA
-
+import uuid
 
 class UserModel(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Text(length=36), default=lambda: str(uuid.uuid4()), primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True, index=True)
     email = db.Column(db.String(120), nullable=False, unique=True)
     password_hash = db.Column(db.String(80), nullable=False)
