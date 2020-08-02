@@ -31,17 +31,17 @@ from src.api.user import (
 #     GithubAuthorize
 # )
 from src.api.confirmation import Confirmation
-from src.api.posts import CreatePost
+from src.api.requests import RequestCreation, RequestsList
 from src.configurations import DevelopmentConfig, ProductionConfig, TestingConfig
 from dotenv import load_dotenv
 
 
-def create_app(config_class=ProductionConfig):
+def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
     load_dotenv()
     jwt.init_app(app)
-    CORS(app)
+    # CORS(app)
     api = Api(app)
     db.init_app(app)
     app.cli.add_command(create_tables)  # To interact with app from CLI
@@ -61,6 +61,10 @@ def create_app(config_class=ProductionConfig):
     api.add_resource(TokenRefresher, '/user/refreshing')
     api.add_resource(UserEmail2FA, '/user/fa2_auth/<string:token>')
 
+    # REQUEST API
+    api.add_resource(RequestsList, '/requests')
+    api.add_resource(RequestCreation, '/requests/new')
+
     print(f"App current configuration: {config_class.CONFIG_NAME}")
 
     # OAuth API
@@ -71,7 +75,6 @@ def create_app(config_class=ProductionConfig):
     api.add_resource(Confirmation, '/user/confirmation/<string:confirmation_id>')
 
     # api.add_resource(User, '/users/<int:user_id>')
-    api.add_resource(CreatePost, '/posts/create')
     api.add_resource(Content, '/content')
 
     @app.route('/')

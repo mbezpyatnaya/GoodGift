@@ -1,3 +1,6 @@
+from src.extensions import db
+
+
 class RequestModel(db.Model):
 
     __tablename__ = "requests"
@@ -5,16 +8,16 @@ class RequestModel(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     theme = db.Column(db.String(80), nullable=False)
     body = db.Column(db.String(190), nullable=False)
-    creator = db.relationship(
-        "UserModel",
-        lazy="dynamic",
-        cascade="all, delete-orphan"
-    )
-    executor = db.relationship(
-        "UserModel",
-        lazy="dynamic",
-        cascade="all, delete-orphan"
-    )
+    # creator = db.relationship(
+    #     "UserModel",
+    #     lazy="dynamic",
+    #     cascade="all, delete-orphan"
+    # )
+    # executor = db.relationship(
+    #     "UserModel",
+    #     lazy="dynamic",
+    #     cascade="all, delete-orphan"
+    # )
     status = db.Column(db.Integer, nullable=False)
 
     @classmethod
@@ -24,6 +27,14 @@ class RequestModel(db.Model):
     @classmethod
     def find_by_theme(cls, theme: str) -> "RequestModel":
         return cls.query.filter_by(theme=theme).first()
+
+    def turn_to_json(self):
+        return {
+            "id": self.id,
+            "theme": self.theme,
+            "body": self.body,
+            "status": self.status
+        }
 
     def save_to_db(self):
         db.session.add(self)
