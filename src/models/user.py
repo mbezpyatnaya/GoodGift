@@ -31,6 +31,18 @@ class UserModel(db.Model):
         cascade="all, delete-orphan"
     )
 
+    user_requests = db.relationship(
+        "RequestModel",
+        lazy="dynamic",
+        cascade="all, delete-orphan"
+    )
+
+    # executing_requests = db.relationship(
+    #     "RequestModel",
+    #     lazy="dynamic",
+    #     cascade="all, delete-orphan"
+    # )
+
     @property
     def most_recent_confirmation(self) -> "ConfirmationModel":
         return self.confirmation.order_by(db.desc(ConfirmationModel.expire_at)).first()

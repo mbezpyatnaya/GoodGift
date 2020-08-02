@@ -4,6 +4,7 @@ from flask_restful import Resource
 from libs.passhash import PassCrypt
 from libs.serving import response_quote
 from src.models.user import UserModel
+from src.models.confirmation import ConfirmationModel
 
 
 class SuperUser(Resource):
@@ -22,9 +23,10 @@ class SuperUser(Resource):
             password_hash=password_hash,
             password_salt=password_salt
         )
-        superuser.confirmation.confirmed = True
+
         superuser.save_to_db()
+        confirmation = ConfirmationModel(superuser.id)
+        confirmation.confirmed = True
+        confirmation.save_to_db()
 
         return {"message": response_quote("user_been_created")}, 201
-
-

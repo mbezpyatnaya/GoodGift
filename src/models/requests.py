@@ -8,16 +8,8 @@ class RequestModel(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     theme = db.Column(db.String(80), nullable=False)
     body = db.Column(db.String(190), nullable=False)
-    # creator = db.relationship(
-    #     "UserModel",
-    #     lazy="dynamic",
-    #     cascade="all, delete-orphan"
-    # )
-    # executor = db.relationship(
-    #     "UserModel",
-    #     lazy="dynamic",
-    #     cascade="all, delete-orphan"
-    # )
+    creator = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    # executor = db.Column(db.Integer, db.ForeignKey("users.id"))
     status = db.Column(db.Integer, nullable=False)
 
     @classmethod
@@ -33,7 +25,8 @@ class RequestModel(db.Model):
             "id": self.id,
             "theme": self.theme,
             "body": self.body,
-            "status": self.status
+            "status": self.status,
+            "creator": self.creator
         }
 
     def save_to_db(self):

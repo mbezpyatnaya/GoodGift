@@ -19,16 +19,17 @@ class RequestCreation(Resource):
     @classmethod
     @jwt_required
     def post(cls):
-        user = get_jwt_identity()
+        session_key = get_jwt_identity()
         data = request.get_json()
-
-        if not UserModel.find_by_session_key(user):
+        user = UserModel.find_by_session_key(session_key)
+        if not user:
             return {"message": response_quote("code_401")}, 401
 
         user_request = RequestModel(
             theme=data["theme"],
             body=data["body"],
-            status=data["status"]
+            status=data["status"],
+            creator=user.id
         )
         user_request.save_to_db()
 
