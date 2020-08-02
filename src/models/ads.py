@@ -9,6 +9,8 @@ class AdsModel(db.Model):
     theme = db.Column(db.String(80), nullable=False)
     body = db.Column(db.String(190), nullable=False)
     status = db.Column(db.Integer, nullable=False)
+    creator = db.Column(db.Text(length=36), db.ForeignKey("users.id"), nullable=False)
+    executor = db.Column(db.Text(length=36), db.ForeignKey("users.id"), nullable=True)
 
     @classmethod
     def find_by_id(cls, _id: int) -> "AdsModel":
