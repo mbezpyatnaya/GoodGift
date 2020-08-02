@@ -33,6 +33,7 @@ from src.api.superuser import SuperUser
 # )
 from src.api.confirmation import Confirmation
 from src.api.requests import RequestCreation, RequestsList
+from src.api.ads import AdsCreation, AdsList
 from src.configurations import DevelopmentConfig, ProductionConfig, TestingConfig
 from dotenv import load_dotenv
 
@@ -68,7 +69,11 @@ def create_app(config_class=DevelopmentConfig):
 
     # REQUEST API
     api.add_resource(RequestsList, '/requests')
-    api.add_resource(RequestCreation, '/requests/new')
+    api.add_resource(RequestCreation, '/request/new')
+
+    # ADS API
+    api.add_resource(AdsList, '/ads')
+    api.add_resource(AdsCreation, '/ad/new')
 
     print(f"App current configuration: {config_class.CONFIG_NAME}")
 
