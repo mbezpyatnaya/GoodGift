@@ -26,6 +26,7 @@ from src.api.user import (
     TokenRefresher,
     UserEmail2FA
 )
+from src.api.superuser import SuperUser
 # from src.api.oauth import (
 #     GithubLogin,
 #     GithubAuthorize
@@ -60,6 +61,10 @@ def create_app(config_class=DevelopmentConfig):
     api.add_resource(UserList, '/users/<int:limit>')
     api.add_resource(TokenRefresher, '/user/refreshing')
     api.add_resource(UserEmail2FA, '/user/fa2_auth/<string:token>')
+
+    # SUPERUSER API
+
+    api.add_resource(SuperUser, '/superuser')
 
     # REQUEST API
     api.add_resource(RequestsList, '/requests')
