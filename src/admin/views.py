@@ -3,8 +3,8 @@ from flask_restful import Resource
 
 from libs.passhash import PassCrypt
 from libs.serving import response_quote
-from src.models.user import UserModel
-from src.models.confirmation import ConfirmationModel
+from src.user.models import UserModel
+from src.email.confirmations.models import ConfirmationModel
 
 
 class SuperUser(Resource):

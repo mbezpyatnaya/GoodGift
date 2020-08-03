@@ -1,7 +1,7 @@
 import datetime
 import hashlib
 import traceback
-from flask import request, render_template
+from flask import request
 from flask_restful import Resource
 from flask_jwt_extended import (
     jwt_required,
@@ -13,8 +13,8 @@ from flask_jwt_extended import (
     jwt_refresh_token_required
 )
 from src.extensions import BLACKLIST
-from src.models.user import UserModel
-from src.models.confirmation import ConfirmationModel
+from src.user.models import UserModel
+from src.email.confirmations.models import ConfirmationModel
 from libs.passhash import PassCrypt
 from libs.mail.mailgun import MailGunException
 from libs.serving import response_quote

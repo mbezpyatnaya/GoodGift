@@ -1,7 +1,7 @@
 from flask import make_response, render_template
 from flask_restful import Resource
 
-from src.models.confirmation import ConfirmationModel
+from src.email.confirmations.models import ConfirmationModel
 from libs.serving import response_quote
 
 

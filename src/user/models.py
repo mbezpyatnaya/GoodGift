@@ -1,12 +1,11 @@
-import time
+import uuid
 from flask import request, url_for
 from requests import Response
 from src.extensions import db
-from src.models.confirmation import ConfirmationModel
+from src.email.confirmations.models import ConfirmationModel
 from libs.mail.mailgun import MailGun
 from libs.serving import response_quote
 from libs.f2auth.email_f2auth import EmailSecondFA
-import uuid
 
 
 class UserModel(db.Model):

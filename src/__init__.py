@@ -1,9 +1,7 @@
-import os
 import logging
 from flask import Flask, render_template
 from flask_restful import Api
 from flask_migrate import Migrate
-from flask_cors import CORS
 from logging.handlers import WatchedFileHandler
 from src.extensions import (
     db,
@@ -14,7 +12,7 @@ from src.extensions import (
     # oauth
 )
 from src.commands import create_tables
-from src.api.user import (
+from src.user.views import (
     UserRegister,
     UserList,
     UserLogin,
@@ -26,14 +24,14 @@ from src.api.user import (
     TokenRefresher,
     UserEmail2FA
 )
-from src.api.superuser import SuperUser
+from src.admin.views import SuperUser
 # from src.api.oauth import (
 #     GithubLogin,
 #     GithubAuthorize
 # )
-from src.api.confirmation import Confirmation
-from src.api.requests import RequestCreation, RequestsList
-from src.api.ads import AdsCreation, AdsList
+from src.email.confirmations.views import Confirmation
+from src.requests.views import RequestCreation, RequestsList
+from src.ads.views import AdsCreation, AdsList
 from src.configurations import DevelopmentConfig, ProductionConfig, TestingConfig
 from dotenv import load_dotenv
 
@@ -43,14 +41,14 @@ def create_app(config_class=DevelopmentConfig):
     app.config.from_object(config_class)
     load_dotenv()
     jwt.init_app(app)
-    # CORS(app)
+    # CORS(src)
     api = Api(app)
     db.init_app(app)
-    app.cli.add_command(create_tables)  # To interact with app from CLI
+    app.cli.add_command(create_tables)  # To interact with src from CLI
     b_crypt.init_app(app)
     ma.init_app(app)
     migrate = Migrate(app, db)
-    # oauth.init_app(app)
+    # oauth.init_app(src)
 
     # USER API
     api.add_resource(UserRegister, '/user/register')
