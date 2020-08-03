@@ -1,6 +1,7 @@
 from src.extensions import db
 import uuid
 
+
 class AdsModel(db.Model):
 
     __tablename__ = "ads"
@@ -10,7 +11,7 @@ class AdsModel(db.Model):
     body = db.Column(db.String(190), nullable=False)
     status = db.Column(db.Integer, nullable=False)
     creator = db.Column(db.Text(length=36), db.ForeignKey("users.id"), nullable=False)
-    executor = db.Column(db.Text(length=36), db.ForeignKey("users.id"), nullable=True)
+    # executor = db.Column(db.Text(length=36), db.ForeignKey("users.id"), nullable=True)
 
     @classmethod
     def find_by_id(cls, _id: int) -> "AdsModel":

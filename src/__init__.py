@@ -58,7 +58,7 @@ def create_app(config_class=DevelopmentConfig):
     api.add_resource(UserLogout, '/user/logout')
     api.add_resource(UserPasswordRestoreRequest, '/user/restore')
     api.add_resource(UserPasswordReSetter, '/user/restore/<string:token>')
-    api.add_resource(User, '/user/<int:_id>')
+    api.add_resource(User, '/user/<string:_id>')
     api.add_resource(UserList, '/users/<int:limit>')
     api.add_resource(TokenRefresher, '/user/refreshing')
     api.add_resource(UserEmail2FA, '/user/fa2_auth/<string:token>')

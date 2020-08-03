@@ -187,7 +187,7 @@ class User(Resource):
     @classmethod
     @jwt_optional
     # TODO: REMAKE WITH SCHEMAS
-    def get(cls, _id: int):
+    def get(cls, _id: str):
         user = UserModel.find_by_id(_id)
         if user:
             return {

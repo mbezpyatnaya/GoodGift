@@ -8,6 +8,7 @@ from libs.serving import response_quote
 from libs.f2auth.email_f2auth import EmailSecondFA
 import uuid
 
+
 class UserModel(db.Model):
     __tablename__ = 'users'
 
@@ -55,7 +56,7 @@ class UserModel(db.Model):
                 }
 
     @classmethod
-    def find_by_id(cls, _id: int) -> "UserModel":
+    def find_by_id(cls, _id: str) -> "UserModel":
         return cls.query.get(_id)
 
     @classmethod

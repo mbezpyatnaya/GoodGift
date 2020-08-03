@@ -1,5 +1,6 @@
-from src.extensions import db
 import uuid
+from src.extensions import db
+
 
 class RequestModel(db.Model):
 
@@ -9,7 +10,7 @@ class RequestModel(db.Model):
     theme = db.Column(db.String(80), nullable=False)
     body = db.Column(db.String(190), nullable=False)
     creator = db.Column(db.Text(length=36), db.ForeignKey("users.id"), nullable=False)
-    executor = db.Column(db.Text(length=36), db.ForeignKey("users.id"), nullable=True)
+    # executor = db.Column(db.Text(length=36), db.ForeignKey("users.id"), nullable=True)
     status = db.Column(db.Integer, nullable=False)
 
     @classmethod
