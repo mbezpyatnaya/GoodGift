@@ -30,7 +30,11 @@ from src.admin.views import SuperUser
 #     GithubAuthorize
 # )
 from src.email.confirmations.views import Confirmation
-from src.requests.views import RequestCreation, RequestsList
+from src.requests.views import (
+    RequestCreation,
+    RequestsList,
+    RequestsThemes
+)
 from src.ads.views import AdsCreation, AdsList
 from src.configurations import DevelopmentConfig, ProductionConfig, TestingConfig
 from dotenv import load_dotenv
@@ -68,6 +72,10 @@ def create_app(config_class=DevelopmentConfig):
     # REQUEST API
     api.add_resource(RequestsList, '/requests')
     api.add_resource(RequestCreation, '/request/new')
+
+    # REQUEST THEMES API
+    # TODO: ONLY FOR SUPERUSER (ADMIN)
+    api.add_resource(RequestsThemes, '/themes')
 
     # ADS API
     api.add_resource(AdsList, '/ads')

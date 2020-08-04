@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from libs.serving import response_quote
 from src.user.models import UserModel
-from src.requests.models import RequestModel
+from src.requests.models import RequestModel, RequestsThemesModel
 
 
 class RequestsList(Resource):
@@ -27,6 +27,7 @@ class RequestCreation(Resource):
 
         user_request = RequestModel(
             theme=data["theme"],
+            title=data["title"],
             body=data["body"],
             status=data["status"],
             creator=user.id
@@ -34,5 +35,24 @@ class RequestCreation(Resource):
         user_request.save_to_db()
 
         return {"msg": "request created"}, 201
+
+
+class RequestsThemes(Resource):
+
+    @classmethod
+    def get(cls):
+        return {"requests_themes": [theme.turn_to_json() for theme in RequestsThemesModel.query.all()]}, 200
+
+    @classmethod
+    # TODO server quote
+    def post(cls):
+        data = request.get_json()
+        if RequestsThemesModel.find_by_id(data["tag"]):
+            return {"msg": "Theme is already exists"}, 400
+        request_theme = RequestsThemesModel(
+            tag=data["tag"]
+        )
+        request_theme.save_to_db()
+        return {"msg": "Theme created"}, 201
 
 
